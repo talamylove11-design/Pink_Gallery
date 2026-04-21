@@ -72,18 +72,27 @@
         </div>
 
     <script>
-        function addImg() {
-            const url = document.getElementById('imgLink').value;
-            if (url === "") return;
-
-            const gallery = document.getElementById('gallery');
-            const pin = document.createElement('div');
-            pin.className = 'pin';
-            pin.innerHTML = `<img src="${url}">`;
-            
-            gallery.appendChild(pin);
-            document.getElementById('imgLink').value = "";
+        async function addImg() {
+    // محاولة جلب الرابط من الحافظة تلقائياً إذا كان المربع فارغاً
+    let url = document.getElementById('imgLink').value;
+    
+    if (url === "") {
+        try {
+            url = await navigator.clipboard.readText();
+        } catch (err) {
+            alert("الرجاء لصق الرابط يدوياً أو التأكد من إعطاء إذن للمتصفح");
+            return;
         }
-    </script>
+    }
+
+    if (url.includes("http")) {
+        const gallery = document.getElementById('gallery');
+        const pin = document.createElement('div');
+        pin.className = 'pin';
+        pin.innerHTML = `<img src="${url}">`;
+        gallery.appendChild(pin);
+        document.getElementById('imgLink').value = "";
+    }
+}
 </body>
 </html>
