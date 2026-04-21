@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>Pink Gallery 🌸</title>
+    <style>
+        body { background-color: #fff0f3; font-family: sans-serif; margin: 0; padding: 20px; }
+        .header { text-align: center; color: #ff4d6d; padding: 20px; }
+        
+        /* تصميم شبكة الصور */
+        .gallery {
+            column-count: 2;
+            column-gap: 15px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pin {
+            background: white;
+            border-radius: 20px;
+            margin-bottom: 15px;
+            break-inside: avoid;
+            box-shadow: 0 4px 10px rgba(255, 182, 193, 0.3);
+            overflow: hidden;
+        }
+
+        .pin img { width: 100%; display: block; transition: 0.3s; }
+        .pin img:hover { transform: scale(1.05); }
+
+        /* صندوق إضافة الصور */
+        .input-box {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 50px;
+            max-width: 600px;
+            margin: 0 auto 30px auto;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        input {
+            border: 2px solid #ffb6c1;
+            border-radius: 25px;
+            padding: 10px 20px;
+            width: 60%;
+            outline: none;
+        }
+
+        button {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>🌸 معرضي الوردي 🌸</h1>
+    </div>
+
+    <div class="input-box">
+        <input type="text" id="imgLink" placeholder="ضعي رابط الصورة هنا...">
+        <button onclick="addImg()">نشر ✨</button>
+    </div>
+
+    <div class="gallery" id="gallery">
+        </div>
+
+    <script>
+        function addImg() {
+            const url = document.getElementById('imgLink').value;
+            if (url === "") return;
+
+            const gallery = document.getElementById('gallery');
+            const pin = document.createElement('div');
+            pin.className = 'pin';
+            pin.innerHTML = `<img src="${url}">`;
+            
+            gallery.appendChild(pin);
+            document.getElementById('imgLink').value = "";
+        }
+    </script>
+</body>
+</html>
