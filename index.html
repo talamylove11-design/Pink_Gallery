@@ -104,41 +104,29 @@
         </div>
 
     <script>
-        function addPhoto() {
-            const inputField = document.getElementById('imgUrl');
-            const url = inputField.value.trim();
+      function addPhoto() {
+    const input = document.getElementById('imgUrl');
+    const url = input.value.trim();
 
-            if (url === "") {
-                alert("الرجاء وضع رابط الصورة أولاً!");
-                return;
-            }
+    if (!url.startsWith('http')) {
+        alert("الرجاء وضع رابط صورة صحيح أولاً ✨");
+        return;
+    }
 
-            const gallery = document.getElementById('gallery');
-            
-            // إنشاء عنصر الصورة الجديد
-            const pin = document.createElement('div');
-            pin.className = 'pin';
-            
-            const img = document.createElement('img');
-            img.src = url;
-            
-            // التعامل مع الروابط الخاطئة
-            img.onerror = function() {
-                alert("عذراً، هذا الرابط غير صالح أو ليس رابط صورة مباشر.");
-                pin.remove();
-            };
-
-            pin.appendChild(img);
-            gallery.prepend(pin); // إضافة الصورة في البداية
-
-            // مسح المربع بعد الإضافة
-            inputField.value = "";
-        }
-
-        // خاصية لصق الرابط تلقائياً عند الضغط على Enter
-        document.getElementById('imgUrl').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                addPhoto();
+    const gallery = document.getElementById('gallery');
+    const pin = document.createElement('div');
+    pin.className = 'pin';
+    
+    // التعديل هنا: أضفنا رابط (<a>) حول الصورة ليجعلها قابلة للضغط
+    pin.innerHTML = `
+        <a href="${url}" target="_blank">
+            <img src="${url}" onerror="this.parentElement.parentElement.remove(); alert('عذراً، الرابط لا يعمل كصورة مباشرة');">
+        </a>
+    `;
+    
+    gallery.prepend(pin);
+    input.value = "";
+}
             }
         });
     </script>
